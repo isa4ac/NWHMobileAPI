@@ -3,10 +3,16 @@ package me.networkhub.networkhubapi.models;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "job_Details")
 public class JobDetail {
+    @PrePersist
+    private void ensureId(){
+        this.setJobdetailIdPk("job-detail-" + UUID.randomUUID().toString());
+    }
+
     @Id
     @Column(name = "jobDetail_Id_PK", nullable = false, length = 96)
     private String jobdetailIdPk;

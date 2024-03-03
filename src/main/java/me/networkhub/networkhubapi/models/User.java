@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 // Named Query for getting an engineer's profile:
 @NamedNativeQuery (name = "User.findUserReviewStatsById_Named",
@@ -32,6 +33,11 @@ import java.time.Instant;
 @Entity
 @Table(name = "user_Data")
 public class User {
+    @PrePersist
+    private void ensureId(){
+        this.setUserdataIdPk("user-data-" + UUID.randomUUID().toString());
+    }
+
     @Id
     @Column(name = "userData_Id_PK", nullable = false, length = 96)
     private String userdataIdPk;
