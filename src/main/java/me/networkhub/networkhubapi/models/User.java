@@ -9,7 +9,7 @@ import java.util.UUID;
 // Named Query for getting an engineer's profile:
 @NamedNativeQuery (name = "User.findUserReviewStatsById_Named",
         query = """
-                    SELECT ud.userData_Name_First as firstName, ud.userData_Name_Last as lastName, ud.userData_Experience_Start as experienceStart, 
+                    SELECT ud.userData_Id_PK as id, ud.userData_Name_First as firstName, ud.userData_Name_Last as lastName, ud.userData_Timezone as timeZone, ud.userData_Experience_Start as experienceStart, 
                     COUNT(jd.jobDetail_Id_PK) as jobsDone, AVG(jr.jobReview_for_Engineer_Rating) as avgReview, 
                     ud.userData_Profile_Description as bio
                      
@@ -22,8 +22,10 @@ import java.util.UUID;
 @SqlResultSetMapping(name = "Mapping.UserReviewStats",
                 classes = @ConstructorResult(targetClass = UserReviewStats.class,
                     columns = {
+                            @ColumnResult (name = "id"),
                             @ColumnResult (name = "firstName"),
                             @ColumnResult(name = "lastName"),
+                            @ColumnResult(name = "timeZone"),
                             @ColumnResult (name = "experienceStart", type=Instant.class),
                             @ColumnResult (name = "jobsDone", type=Long.class),
                             @ColumnResult (name = "avgReview", type=Double.class),
