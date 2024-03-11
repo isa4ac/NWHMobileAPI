@@ -14,8 +14,8 @@ import java.util.UUID;
                     ud.userData_Profile_Description as bio
                      
                     FROM user_Data as ud
-                        join job_Reviews jr on ud.userData_Id_PK = jr.jobReview_for_Engineer_UserId_FK
-                        join job_Details jd on ud.userData_Id_PK = jd.jobDetail_Engineer_UserId_FK
+                        left join job_Reviews jr on ud.userData_Id_PK = jr.jobReview_for_Engineer_UserId_FK
+                        left join job_Details jd on ud.userData_Id_PK = jd.jobDetail_Engineer_UserId_FK
                     WHERE userData_Id_PK = :id
                 """,
         resultSetMapping = "Mapping.UserReviewStats")

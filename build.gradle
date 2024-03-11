@@ -27,5 +27,14 @@ tasks.named('test') {
 }
 
 jar {
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+	manifest {
+		attributes(
+				'Main-Class': 'me.networkhub.networkhubapi.NetworkhubapiApplication'
+		)
+	}
+	from {
+		configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it)}
+	}
 	destinationDirectory.set(file("/users/ivanmeter/projects"))
 }
