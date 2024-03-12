@@ -9,14 +9,38 @@ import java.util.UUID;
 // Named Query for getting an engineer's profile:
 @NamedNativeQuery (name = "User.findUserReviewStatsById_Named",
         query = """
-                    SELECT ud.userData_Id_PK as id, ud.userData_Name_First as firstName, ud.userData_Name_Last as lastName, ud.userData_Timezone as timeZone, ud.userData_Experience_Start as experienceStart, 
-                    COUNT(jd.jobDetail_Id_PK) as jobsDone, AVG(jr.jobReview_for_Engineer_Rating) as avgReview, 
-                    ud.userData_Profile_Description as bio
-                     
-                    FROM user_Data as ud
-                        left join job_Reviews jr on ud.userData_Id_PK = jr.jobReview_for_Engineer_UserId_FK
-                        left join job_Details jd on ud.userData_Id_PK = jd.jobDetail_Engineer_UserId_FK
-                    WHERE userData_Id_PK = :id
+                    SELECT
+                        ud.userData_Id_PK as id,
+                        ud.userData_Name_First as firstName,
+                        ud.userData_Name_Last as lastName,
+                        ud.userData_Timezone as timeZone,
+                        ROUND(DATEDIFF(ud.userData_Experience_Start, CURDATE())/-365, 1) as experience,
+                        AVG(jr.jobReview_for_Engineer_Rating) as avgReview,
+                        COALESCE(cj.CompletedJobs, 0) as jobsDone,
+                        ud.userData_Profile_Description as bio
+                    FROM
+                        user_Data ud
+                        LEFT JOIN job_Reviews jr ON ud.userData_Id_PK = jr.jobReview_for_Engineer_UserId_FK
+                        LEFT JOIN (
+                            SELECT
+                                jd2.jobDetail_Engineer_UserId_FK,\s
+                                COUNT(*) as CompletedJobs
+                            FROM
+                                job_Details jd2
+                            WHERE
+                                jd2.jobDetail_Defined_Job_Status_FK = 'job-status-closed'
+                            GROUP BY
+                                jd2.jobDetail_Engineer_UserId_FK
+                        ) as cj ON ud.userData_Id_PK = cj.jobDetail_Engineer_UserId_FK
+                    WHERE
+                        ud.userData_Id_PK = :id
+                    GROUP BY
+                        ud.userData_Id_PK,
+                        ud.userData_Name_First,
+                        ud.userData_Name_Last,
+                        ud.userData_Timezone,
+                        ud.userData_Experience_Start,
+                        ud.userData_Profile_Description
                 """,
         resultSetMapping = "Mapping.UserReviewStats")
 @SqlResultSetMapping(name = "Mapping.UserReviewStats",
@@ -26,7 +50,7 @@ import java.util.UUID;
                             @ColumnResult (name = "firstName"),
                             @ColumnResult(name = "lastName"),
                             @ColumnResult(name = "timeZone"),
-                            @ColumnResult (name = "experienceStart", type=Instant.class),
+                            @ColumnResult (name = "experience", type=Double.class),
                             @ColumnResult (name = "jobsDone", type=Long.class),
                             @ColumnResult (name = "avgReview", type=Double.class),
                             @ColumnResult (name = "bio")

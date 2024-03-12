@@ -7,17 +7,17 @@ public class UserReviewStats {
     private String firstName;
     private String lastName;
     private String timeZone;
-    private Instant experienceStart;
+    private Double experience;
     private Long jobsDone;
     private Double avgReview;
     private String bio;
 
-    public UserReviewStats(String id,String firstName, String lastName, String timeZone, Instant experienceStart, Long jobsDone, Double avgReview, String bio) {
+    public UserReviewStats(String id,String firstName, String lastName, String timeZone, Double experience, Long jobsDone, Double avgReview, String bio) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeZone = timeZone;
-        this.experienceStart = experienceStart;
+        this.experience = experience;
         this.jobsDone = jobsDone;
         this.avgReview = avgReview;
         this.bio = bio;
@@ -55,12 +55,12 @@ public class UserReviewStats {
         this.timeZone = timeZone;
     }
 
-    public Instant getExperienceStart() {
-        return experienceStart;
+    public Double getExperience() {
+        return experience;
     }
 
-    public void setExperienceStart(Instant experienceStart) {
-        this.experienceStart = experienceStart;
+    public void setExperience(Double experience) {
+        this.experience = experience;
     }
 
     public Long getJobsDone() {
