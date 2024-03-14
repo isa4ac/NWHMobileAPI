@@ -43,21 +43,21 @@ public class JobDetail {
 
     @Lob
     @Column(name = "jobDetail_Proposal_Target_Budget")
-    private String jobdetailProposalTargetBudget;
+    private Double jobdetailProposalTargetBudget;
 
     @Column(name = "jobDetail_Proposal_Target_Date")
     private Instant jobdetailProposalTargetDate;
 
     @Lob
     @Column(name = "jobDetail_Proposal_Agreed_Budget")
-    private String jobdetailProposalAgreedBudget;
+    private Double jobdetailProposalAgreedBudget;
 
     @Column(name = "jobDetail_Proposal_Agreed_Date")
     private Instant jobdetailProposalAgreedDate;
 
     @Lob
     @Column(name = "jobDetail_Proposal_Final_Budget")
-    private String jobdetailProposalFinalBudget;
+    private Double jobdetailProposalFinalBudget;
 
     @Column(name = "jobDetail_Proposal_Final_Date")
     private Instant jobdetailProposalFinalDate;
@@ -157,11 +157,11 @@ public class JobDetail {
         this.jobdetailDescriptionFromEngineer = jobdetailDescriptionFromEngineer;
     }
 
-    public String getJobdetailProposalTargetBudget() {
+    public Double getJobdetailProposalTargetBudget() {
         return jobdetailProposalTargetBudget;
     }
 
-    public void setJobdetailProposalTargetBudget(String jobdetailProposalTargetBudget) {
+    public void setJobdetailProposalTargetBudget(Double jobdetailProposalTargetBudget) {
         this.jobdetailProposalTargetBudget = jobdetailProposalTargetBudget;
     }
 
@@ -173,11 +173,11 @@ public class JobDetail {
         this.jobdetailProposalTargetDate = jobdetailProposalTargetDate;
     }
 
-    public String getJobdetailProposalAgreedBudget() {
+    public Double getJobdetailProposalAgreedBudget() {
         return jobdetailProposalAgreedBudget;
     }
 
-    public void setJobdetailProposalAgreedBudget(String jobdetailProposalAgreedBudget) {
+    public void setJobdetailProposalAgreedBudget(Double jobdetailProposalAgreedBudget) {
         this.jobdetailProposalAgreedBudget = jobdetailProposalAgreedBudget;
     }
 
@@ -189,11 +189,11 @@ public class JobDetail {
         this.jobdetailProposalAgreedDate = jobdetailProposalAgreedDate;
     }
 
-    public String getJobdetailProposalFinalBudget() {
+    public Double getJobdetailProposalFinalBudget() {
         return jobdetailProposalFinalBudget;
     }
 
-    public void setJobdetailProposalFinalBudget(String jobdetailProposalFinalBudget) {
+    public void setJobdetailProposalFinalBudget(Double jobdetailProposalFinalBudget) {
         this.jobdetailProposalFinalBudget = jobdetailProposalFinalBudget;
     }
 

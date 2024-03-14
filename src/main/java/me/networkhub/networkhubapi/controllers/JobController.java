@@ -22,7 +22,7 @@ public class JobController {
     public String postJob(@RequestParam(value = "business_user_id") String userId,
                         @RequestParam(value = "job_title") String title,
                         @RequestParam(value = "job_description") String description,
-                        @RequestParam(value = "target_budget") String targetBudget,
+                        @RequestParam(value = "target_budget") Double targetBudget,
                         @RequestParam(value = "target_date") Instant targetDate) {
 
         JobDetail job = new JobDetail();
@@ -34,6 +34,26 @@ public class JobController {
         job.setJobdetailProposalTargetDate(targetDate);
         job.setJobdetailIsRemoved(0);
         job.setJobdetailPostedDt(Instant.now());
+        JobDetail savedJob = jobRepo.save(job);
+        if (!savedJob.equals(null) && savedJob != null) {
+            return "Success";
+        } else {
+            return "Failed to save job.";
+        }
+    }
+
+    @PostMapping("/updatejob")
+    public String updateJob(@RequestParam(value = "job_id") String jobId,
+                            @RequestParam(value = "job_title") String title,
+                            @RequestParam(value = "job_description") String description,
+                            @RequestParam(value = "target_budget") Double targetBudget,
+                            @RequestParam(value = "target_date") Instant targetDate) {
+
+        JobDetail job = jobRepo.getByJobdetailIdPk(jobId);
+        job.setJobdetailTitle(title);
+        job.setJobdetailDescriptionFromBusiness(description);
+        job.setJobdetailProposalTargetBudget(targetBudget);
+        job.setJobdetailProposalTargetDate(targetDate);
         JobDetail savedJob = jobRepo.save(job);
         if (!savedJob.equals(null) && savedJob != null) {
             return "Success";

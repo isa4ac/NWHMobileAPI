@@ -82,9 +82,6 @@ public class JobBid {
     @Column(name = "jobBid_Proposed_Amount", precision = 10, scale = 2)
     private BigDecimal jobbidProposedAmount;
 
-    @Column(name = "jobBid_Experience_Start")
-    private Instant jobbidExperienceStart;
-
     public String getJobbidIdPk() {
         return jobbidIdPk;
     }
@@ -131,14 +128,6 @@ public class JobBid {
 
     public void setJobbidProposedAmount(BigDecimal jobbidProposedAmount) {
         this.jobbidProposedAmount = jobbidProposedAmount;
-    }
-
-    public Instant getJobbidExperienceStart() {
-        return jobbidExperienceStart;
-    }
-
-    public void setJobbidExperienceStart(Instant jobbidExperienceStart) {
-        this.jobbidExperienceStart = jobbidExperienceStart;
     }
 
 }

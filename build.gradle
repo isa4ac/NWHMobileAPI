@@ -18,7 +18,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -36,5 +36,9 @@ jar {
 	from {
 		configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it)}
 	}
+	destinationDirectory.set(file("/users/ivanmeter/projects"))
+}
+
+bootJar {
 	destinationDirectory.set(file("/users/ivanmeter/projects"))
 }
