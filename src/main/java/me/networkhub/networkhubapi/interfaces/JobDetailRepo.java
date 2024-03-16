@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface JobDetailRepo extends JpaRepository<JobDetail, String> {
     List<JobDetail> findJobDetailByJobdetailBusinessUseridFk(String id);
-    Boolean deleteByJobdetailIdPk(String id);
     JobDetail getByJobdetailIdPk(String id);
 }

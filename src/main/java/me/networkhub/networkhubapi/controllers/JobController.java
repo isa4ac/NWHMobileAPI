@@ -1,7 +1,9 @@
 package me.networkhub.networkhubapi.controllers;
 
+import me.networkhub.networkhubapi.interfaces.JobBidRepo;
 import me.networkhub.networkhubapi.interfaces.JobDetailRepo;
 import me.networkhub.networkhubapi.interfaces.UserRepo;
+import me.networkhub.networkhubapi.models.JobBid;
 import me.networkhub.networkhubapi.models.JobDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

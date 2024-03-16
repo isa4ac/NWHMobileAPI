@@ -11,9 +11,11 @@ import me.networkhub.networkhubapi.models.User;
 import me.networkhub.networkhubapi.models.UserReviewStats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -40,5 +42,20 @@ public class UserController {
     @GetMapping("/businessJobs")
     public List<JobDetail> getBusinessJobs(@RequestParam(value = "id") String id) {
         return jobRepo.findJobDetailByJobdetailBusinessUseridFk(id);
+    }
+    @PostMapping("/updateprofile")
+    public String updateJob(@RequestParam(value = "user_id") String jobId,
+                            @RequestParam(value = "business_name") String bName,
+                            @RequestParam(value = "bio") String description) {
+
+        User user = userRepo.getReferenceById(jobId);
+        user.setUserdataNameBusiness(bName);
+        user.setUserdataProfileDescription(description);
+        User savedUser = userRepo.save(user);
+        if (!savedUser.equals(null) && savedUser != null) {
+            return "Success";
+        } else {
+            return "Failed to save job.";
+        }
     }
 }
