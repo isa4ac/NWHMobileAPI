@@ -4,11 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import me.networkhub.networkhubapi.interfaces.JobDetailRepo;
+import me.networkhub.networkhubapi.interfaces.TimeZoneRepo;
 import me.networkhub.networkhubapi.interfaces.UserRepo;
-import me.networkhub.networkhubapi.models.Greeting;
-import me.networkhub.networkhubapi.models.JobDetail;
-import me.networkhub.networkhubapi.models.User;
-import me.networkhub.networkhubapi.models.UserReviewStats;
+import me.networkhub.networkhubapi.models.*;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +23,8 @@ public class UserController {
     UserRepo userRepo;
     @Autowired
     JobDetailRepo jobRepo;
+    @Autowired
+    TimeZoneRepo timeZoneRepo;
 
     // example call: localhost:8080/login?email
     @GetMapping("/login")
@@ -91,5 +92,10 @@ public class UserController {
         }
 
         return "failure";
+    }
+
+    @GetMapping("/gettimezones")
+    public List<DefineTimezone> getTimeZones() {
+        return timeZoneRepo.findAll();
     }
 }
