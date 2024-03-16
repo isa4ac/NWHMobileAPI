@@ -58,4 +58,38 @@ public class UserController {
             return "Failed to save job.";
         }
     }
+    @PostMapping("/business_signup")
+    public String businessSignup(@RequestParam(value = "email") String email,
+                                 @RequestParam(value = "password") String password,
+                                 @RequestParam(value = "first_name") String firstName,
+                                 @RequestParam(value = "last_name") String lastName,
+                                 @RequestParam(value = "time_zone") String timeZone,
+                                 @RequestParam(value = "business_name") String businessName,
+                                 @RequestParam(value = "business_location") String businessLocation,
+                                 @RequestParam(value = "bio") String bio) {
+        User user = new User();
+
+        if (userRepo.getByUserdataPrimaryEmail(email) != null) {
+            return "email in use";
+        }
+
+        user.setUserdataDefineRoleIdFk("role-business");
+        user.setUserdataPrimaryEmail(email);
+        user.setUserdataPassword(password);
+        user.setUserdataNameFirst(firstName);
+        user.setUserdataNameLast(lastName);
+        user.setUserdataTimezone(timeZone);
+        user.setUserdataNameBusiness(businessName);
+        user.setUserdataProfileDescription(bio);
+        user.setUserdataBusinessLocation(businessLocation);
+        user.setUserdataIsEnabled(true);
+        user.setUserdataDtAdded(Instant.now());
+
+        User savedUser = userRepo.save(user);
+        if (!savedUser.equals(null) && savedUser != null) {
+            return savedUser.getUserdataIdPk();
+        }
+
+        return "failure";
+    }
 }

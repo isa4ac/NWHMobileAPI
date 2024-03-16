@@ -128,6 +128,9 @@ public class User {
     @Column(name = "userData_Experience_Start")
     private Instant userdataExperienceStart;
 
+    @Column(name = "userData_Business_Location")
+    private String userdataBusinessLocation;
+
     public String getUserdataIdPk() {
         return userdataIdPk;
     }
@@ -272,4 +275,11 @@ public class User {
         this.userdataExperienceStart = userdataExperienceStart;
     }
 
+    public String getUserdataBusinessLocation() {
+        return userdataBusinessLocation;
+    }
+
+    public void setUserdataBusinessLocation(String userdataBusinessLocation) {
+        this.userdataBusinessLocation = userdataBusinessLocation;
+    }
 }
