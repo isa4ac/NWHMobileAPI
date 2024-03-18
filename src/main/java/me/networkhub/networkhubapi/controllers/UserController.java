@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/login")
     public User login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
         List<User> users = userRepo.findByUserdataPrimaryEmailAndUserdataPassword(email, password);
-        return users.isEmpty() ? null : users.get(0);
+        return users.isEmpty() ? new User() : users.get(0);
     }
     @GetMapping("/getUsers")
     public List<User> getUsers() {
@@ -60,7 +60,7 @@ public class UserController {
         }
     }
     @PostMapping("/business_signup")
-    public String businessSignup(@RequestParam(value = "email") String email,
+    public User businessSignup(@RequestParam(value = "email") String email,
                                  @RequestParam(value = "password") String password,
                                  @RequestParam(value = "first_name") String firstName,
                                  @RequestParam(value = "last_name") String lastName,
@@ -71,7 +71,7 @@ public class UserController {
         User user = new User();
 
         if (userRepo.getByUserdataPrimaryEmail(email) != null) {
-            return "email in use";
+            return new User();
         }
 
         user.setUserdataDefineRoleIdFk("role-business");
@@ -87,11 +87,7 @@ public class UserController {
         user.setUserdataDtAdded(Instant.now());
 
         User savedUser = userRepo.save(user);
-        if (!savedUser.equals(null) && savedUser != null) {
-            return savedUser.getUserdataIdPk();
-        }
-
-        return "failure";
+        return savedUser;
     }
 
     @GetMapping("/gettimezones")
