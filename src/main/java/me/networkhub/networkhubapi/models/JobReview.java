@@ -3,10 +3,16 @@ package me.networkhub.networkhubapi.models;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "job_Reviews")
 public class JobReview {
+    @PrePersist
+    private void ensureId(){
+        this.setJobreviewIdPk("job-review-" + UUID.randomUUID().toString());
+    }
+
     @Id
     @Column(name = "jobReview_Id_PK", nullable = false, length = 96)
     private String jobreviewIdPk;
@@ -20,8 +26,8 @@ public class JobReview {
     @Column(name = "jobReview_for_Business_Posted_DT")
     private Instant jobreviewForBusinessPostedDt;
 
-    @Column(name = "jobReview_for_Business_Rating")
-    private Boolean jobreviewForBusinessRating;
+    @Column(name = "jobReview_for_Business_Rating", columnDefinition = "INTEGER(11,0)")
+    private Integer jobreviewForBusinessRating;
 
     @Lob
     @Column(name = "jobReview_for_Business_Text", columnDefinition = "LONGTEXT")
@@ -34,7 +40,7 @@ public class JobReview {
     private Instant jobreviewForEngineerPostedDt;
 
     @Column(name = "jobReview_for_Engineer_Rating")
-    private Boolean jobreviewForEngineerRating;
+    private Integer jobreviewForEngineerRating;
 
     @Lob
     @Column(name = "jobReview_for_Engineer_Text", columnDefinition = "LONGTEXT")
@@ -76,11 +82,11 @@ public class JobReview {
         this.jobreviewForBusinessPostedDt = jobreviewForBusinessPostedDt;
     }
 
-    public Boolean getJobreviewForBusinessRating() {
+    public Integer getJobreviewForBusinessRating() {
         return jobreviewForBusinessRating;
     }
 
-    public void setJobreviewForBusinessRating(Boolean jobreviewForBusinessRating) {
+    public void setJobreviewForBusinessRating(Integer jobreviewForBusinessRating) {
         this.jobreviewForBusinessRating = jobreviewForBusinessRating;
     }
 
@@ -108,11 +114,11 @@ public class JobReview {
         this.jobreviewForEngineerPostedDt = jobreviewForEngineerPostedDt;
     }
 
-    public Boolean getJobreviewForEngineerRating() {
+    public Integer getJobreviewForEngineerRating() {
         return jobreviewForEngineerRating;
     }
 
-    public void setJobreviewForEngineerRating(Boolean jobreviewForEngineerRating) {
+    public void setJobreviewForEngineerRating(Integer jobreviewForEngineerRating) {
         this.jobreviewForEngineerRating = jobreviewForEngineerRating;
     }
 
